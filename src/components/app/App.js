@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState } from "react"
 import AppHeader from "../appHeader/AppHeader"
 import CharInfo from "../charInfo/CharInfo"
 import CharList from "../charList/CharList"
+import ErrorBoundary from "../errorBoundary/ErrorBoundary"
 import RandomChar from "../randomChar/RandomChar"
 
 import decoration from '../../resources/img/vision.png'
-
 const App = () => {
 
     const [selectedChar, setChar] = useState(null);
@@ -18,12 +18,20 @@ const App = () => {
         <div className="app">
             <AppHeader/>
             <main>
-                <RandomChar/>
+                <ErrorBoundary>
+                    <RandomChar/>
+                </ErrorBoundary>
                 <div className="char__content">
-                    <CharList onCharSelected={onCharSelected}/>
-                    <CharInfo charId={selectedChar}/>
+                    <ErrorBoundary>
+                        <CharList onCharSelected={onCharSelected}/>
+                    </ErrorBoundary>
+                    <ErrorBoundary>
+                        <CharInfo charId={selectedChar}/>
+                    </ErrorBoundary>
                 </div>
                 <img className="bg-decoration" src={decoration} alt="vision"/>
+                {/* <AppBanner/>
+                <ComicsList/> */}
             </main>
         </div>
     )
